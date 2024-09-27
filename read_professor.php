@@ -33,7 +33,7 @@ $result = $conn-> query($sql);
                 <td><?php echo $row['CPF']?></td>
                 <td><?php echo$row['materia']?></td>
                 <td>
-                    <a href= "delete.php? id_professor=<?php echo $row['id_professor']?>">Excluir</a>
+                    <a href= "delete_professor.php? id_professor=<?php echo $row['id_professor']?>">Excluir</a>
                     <a href="update_professor.php?id_professor=<?php echo $row['id_professor']?>">Editar</a>
                 </td>
             </tr>

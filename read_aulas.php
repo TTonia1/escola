@@ -30,7 +30,7 @@ $result = $conn-> query($sql);
                 <td><?php echo $row['numero_sala']?></td>
                 <td><?php echo $row['tipo_sala']?></td>
                 <td>
-                    <a href= "delete_aulas.php? id_aula=<?php echo $row['id_aula']?>">Excluir</a>
+                    <a href= "delete_aulas.php?id_aula=<?php echo $row['id_aula']?>">Excluir</a>
                     <a href="update_aulas.php?id_aula=<?php echo $row['id_aula']?>">Editar</a>
                 </td>
             </tr>

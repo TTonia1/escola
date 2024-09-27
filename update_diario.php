@@ -1,42 +1,59 @@
 <?php
     include 'db.php';
 
+
     $id_diario = $_GET['id_diario'];
 
+
+    $professores = array();
+    $response = $conn->query("SELECT nome_professor, id_professor from professor");
+    while ($row = $response->fetch_assoc()) {
+        $id_professor = array_push($professores, $row);
+    }
+
+
+    $aulas = array();
+    $response_aulas = $conn->query("SELECT numero_sala, id_aula from aulas;");
+    while($row = $response_aulas->fetch_assoc()){
+        $id_aula = array_push($aulas,$row);
+    }
+
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
 
         $id_professor =  $_POST['id_professor'];
         $id_diario = $_POST['id_diario'];
         $hora_aula = $_POST['hora_aula'];
         $turma = $_POST['turma'];
+     
+
 
         $sql = "UPDATE diario SET hora_aula='$hora_aula', turma='$turma' WHERE id_diario= '$id_diario';";
-        
+       
         if ($conn->query($sql) === TRUE) {
-            echo "Registro atualizado com sucesso";
-            header("Location: read_professor.php");
+            header("Location: read.php");
             exit();
         } else {
             echo "Erro: " . $sql . "<br>" . $conn->error;
         }
-       
+        $conn ->close();
+        header ("Location: read.php");
+        exit();
     }
     $sql = "SELECT * FROM diario WHERE id_diario='$id_diario'";
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
 
-    $sql_professores = "SELECT id_professor, nome_professor FROM professor";
+
+    $sql_professores = "SELECT id_professor, nome_professor FROM professor WHERE id_professor= '$id_professor'" ;
     $result_professores = $conn->query($sql_professores);
 
-    $sql_aulas = "SELECT id_aula, numero_sala FROM aulas";
-    $result_aulas = $conn->query($sql_aulas);
 
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-    } else {
-        die("Registro não encontrado.");
-    }
+    $sql_aulas = "SELECT id_aula, numero_sala FROM aulas WHERE id_aula = '$id_aula'";
+    $result_aulas = $conn->query($sql_aulas);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -55,9 +72,9 @@
         <label for="id_professor">Professor</label>
         <select name="id_professor"   class='input' required>
             <option>Selecione um professor</option>
-            <?php while ($professor = $result_professores->fetch_assoc()): ?>
-                <option value="<?php echo $professor['id_professor']; ?>" <?php echo ($professor['id_professor'] == $row['id_professor']) ? 'selected' : ''; ?>>
-                    <?php echo $professor['nome_professor']; ?>
+            <?php while ($professores = $result_professores->fetch_assoc()): ?>
+                <option value="<?php echo $professores['id_professor']; ?>" <?php echo ($professores['id_professor'] == $row['id_professor']) ? 'selected' : ''; ?>>
+                    <?php echo $professores['nome_professor']; ?>
                 </option>
             <?php endwhile; ?>
         </select>
@@ -73,3 +90,4 @@
     </form>
 </body>
 </html>
+

@@ -1,5 +1,6 @@
 <?php
   include 'db.php';
+  
   $id_professor = $_GET['id_professor'];
   
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {

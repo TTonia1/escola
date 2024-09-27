@@ -2,17 +2,16 @@
     include 'db.php';
 
     $id_aula = $_GET['id_aula'];
-
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
 
         $numero_sala = $_POST['numero_sala'];
         $tipo_sala = $_POST['tipo_sala'];
 
-        $sql = "UPDATE aulas SET numero_sala='$numero_sala', tipo_sala='$tipo_sala' WHERE id_aula= '$id_aula'";
+        $sql = "UPDATE aulas SET numero_sala='$numero_sala', tipo_sala='$tipo_sala' WHERE id_aula='$id_aula'";
 
         if ($conn->query($sql) === TRUE) {
-            echo "Registro atualizado com sucesso";
-            header("Location: read_professor.php");
+            header("Location: read_aulas.php");
             exit();
         } else {
             echo "Erro: " . $sql . "<br>" . $conn->error;
@@ -38,7 +37,7 @@
     <title>Update Aulas</title>
 </head>
 <body class='centralizar'>
-    <form method="POST" action=" update_aulas.php?id_aulas=<?php echo $row['id_aula'];?>">
+    <form method="POST" action="update_aulas.php?id_aula=<?php echo $row['id_aula'];?>">
         <label for="numero_sala">Numero Sala</label>
         <input type="number" name="numero_sala" class='input' value="<?php echo $row['numero_sala']; ?>" required>
         <label for="tipo_sala">Tipo Sala</label>
