@@ -6,7 +6,7 @@
 
 
     $professores = array();
-    $response = $conn->query("SELECT nome_professor, id_professor from professor");
+    $response = $conn->query("SELECT nome_professor, id_professor from professor;");
     while ($row = $response->fetch_assoc()) {
         $id_professor = array_push($professores, $row);
     }
@@ -29,7 +29,8 @@
      
 
 
-        $sql = "UPDATE diario SET hora_aula='$hora_aula', turma='$turma' WHERE id_diario= '$id_diario';";
+        $sql = "UPDATE diario SET hora_aula='$hora_aula', turma='$turma', id_professor='$id_professor' WHERE id_diario= '$id_diario';";
+      
        
         if ($conn->query($sql) === TRUE) {
             header("Location: read.php");
@@ -41,16 +42,16 @@
         header ("Location: read.php");
         exit();
     }
-    $sql = "SELECT * FROM diario WHERE id_diario='$id_diario'";
+    $sql = "SELECT * FROM diario ";
     $result = $conn -> query($sql);
     $row = $result -> fetch_assoc();
 
 
-    $sql_professores = "SELECT id_professor, nome_professor FROM professor WHERE id_professor= '$id_professor'" ;
+    $sql_professores = "SELECT id_professor, nome_professor FROM professor" ;
     $result_professores = $conn->query($sql_professores);
 
 
-    $sql_aulas = "SELECT id_aula, numero_sala FROM aulas WHERE id_aula = '$id_aula'";
+    $sql_aulas = "SELECT id_aula, numero_sala FROM aulas ";
     $result_aulas = $conn->query($sql_aulas);
 ?>
 

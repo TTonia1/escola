@@ -13,6 +13,7 @@ while($row = $response_aulas->fetch_assoc()){
     $id_aula = array_push($aulas,$row);
 }
 
+
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
     $hora_aula = $_POST['hora_aula'];
     $turma = $_POST['turma'];
